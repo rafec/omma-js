@@ -30,6 +30,16 @@ function readRecipes(recipes){
     })
 }
 
-// function deleteRecipe(){
+// function updateRecipe(){
 
 // }
+
+function deleteRecipe(id){
+    const recipeExists = recipes.some(recipe => recipe.id == id);
+    if (recipeExists){
+        const newList = recipes.filter(recipe => recipe.id != id);
+        console.log(newList);
+    } else {
+        console.log("This recipe doesn't exists!");
+    }
+}
