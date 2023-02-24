@@ -18,8 +18,16 @@ function createRecipe(title, level, ingredients, instructions, video, vegan) {
     console.log("Recipe inserted! You've successfully created a new recipe!");
 }
 
-function showRecipes(){
+function readRecipes(recipes){
+    let recipeProperties = recipes.map(recipe => {
+        let properties = {
+            title: recipe.title,
+            ingredients: recipe.ingredients,
+            vegan: recipe.vegan
+        }
 
+        return properties;
+    })
 }
 
 // function deleteRecipe(){
