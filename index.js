@@ -4,6 +4,8 @@ const companyName = "Omma Technologies";
 const recipes = [];
 let choice = 0;
 
+
+//CREATE
 function createRecipe(id, title, level, ingredients, instructions, video, vegan) {
     const newRecipe = {
         id: id,
@@ -19,6 +21,54 @@ function createRecipe(id, title, level, ingredients, instructions, video, vegan)
     console.log("Recipe inserted! You've successfully created a new recipe!");
 }
 
+function getCreateEntries() {
+    let booleanValidator = false;
+    let id;
+    let title;
+    let level;
+    let ingredients = [];
+    let instructions = [];
+    let video;
+    let vegan;
+
+    id = Number(prompt("Enter the ID of the new recipe (integer number): "));
+
+    title = prompt("Enter the title of the new recipe: ");
+
+    level = Number(prompt("Enter the level of dificulty of the new recipe (1 - Simple | 2 - Moderate | 3 - Complex): "));
+
+    do {
+        let ingredient = prompt("Enter an ingredient of the new recipe: ");
+        ingredients.push(ingredient);
+        another = prompt("Would you like to add another ingredient (y/n)?: ");
+    } while (another == "y")
+
+    do {
+        let instruction = prompt("Enter an instruction to prepare the new recipe: ");
+        instructions.push(instruction);
+        another = prompt("Would you like to add another instruction (y/n)?: ");
+    } while (another == "y")
+
+    video = prompt("Enter the link of the video of the new recipe: ");
+
+    vegan = prompt("This recipe is vegan? (yes | no): ");
+    do {
+        if (vegan == "yes" || vegan == "Yes" || vegan == "y") {
+            vegan = true;
+            booleanValidator = true;
+        } else if (vegan == "no" || vegan == "No" || vegan == "n") {
+            vegan = false;
+            booleanValidator = true;
+        } else {
+            vegan = prompt("Please, insert a valid value: ");
+        }
+    } while (!booleanValidator)
+
+
+    createRecipe(id, title, level, ingredients, instructions, video, vegan);
+}
+
+//READ
 function readRecipe(recipes) {
     let recipeProperties = recipes.map(recipe => {
         let properties = {
@@ -32,10 +82,19 @@ function readRecipe(recipes) {
     console.log(recipeProperties);
 }
 
-// function updateRecipe() {
+function getRecipeById() {
+    let idSearch = Number(prompt("Enter the id of the recipe that you want to search: "));
+    let searchedRecipe = recipes.filter(recipe => recipe.id == idSearch);
 
-// }
+    return searchedRecipe;
+}
 
+//UPDATE
+function updateRecipe() {
+
+}
+
+//DELETE
 function deleteRecipe(id) {
     const recipeExists = recipes.some(recipe => recipe.id == id);
     if (recipeExists) {
@@ -56,53 +115,23 @@ do {
 
     switch (choice) {
         case 1:
-            let booleanValidator = false;
-
-            let id = Number(prompt("Enter the ID of the new recipe (integer number): "));
-            while (!Number.isInteger(id)) {
-                id = prompt("Please, insert a valid number: ");
-            }
-
-            let title = prompt("Enter the title of the new recipe: ");
-
-            let level = Number(prompt("Enter the level of dificulty of the new recipe (1 - Simple | 2 - Moderate | 3 - Complex): "));
-            while (level != 1) {
-                console.log(level);
-                level = prompt("Please enter one of the options above: ");
-            }
-
-            let ingredients = prompt("Enter the ingredients of the new recipe: ");
-
-            let instructions = prompt("Enter the instructions to prepare the new recipe: ");
-
-            let video = prompt("Enter the link of the video of the new recipe: ");
-
-            let vegan = prompt("This recipe is vegan? (yes | no): ");
-            if (vegan == "yes" || vegan == "Yes" || vegan == "y") {
-                vegan = true;
-                booleanValidator = true;
-            } else if (vegan == "no" || vegan == "No" || vegan == "n") {
-                vegan = false;
-                booleanValidator = true;
-            }
-            while (!booleanValidator) {
-                vegan = prompt("Please, insert a valid value: ");
-            }
-
-
-            createRecipe(id, title, level, ingredients, instructions, video, vegan);
+            getCreateEntries();
             break;
 
+        case 2:
+            updateRecipe();
+
         case 3:
-            let idSearch = Number(prompt("Enter the id of the recipe that you want to search: "));
-            let searchedRecipe = recipes.filter(recipe => recipe.id == idSearch);
-            readRecipe(searchedRecipe);
+            readRecipe(getRecipeById());
             break;
 
         case 4:
-            let idDelete = Number(prompt("Enter the id of the recipe that you want to search: "));
+            let idDelete = Number(prompt("Enter the id of the recipe that you want to delete: "));
             deleteRecipe(idDelete);
             break;
+
+        default:
+            console.log("Invalid option!");
     }
 
 } while (choice != 5)
