@@ -4,6 +4,25 @@ const companyName = "Omma Technologies";
 const recipes = [];
 let choice = 0;
 
+function draw(section) {
+    switch (section) {
+        case "welcome":
+            console.log(`\n| ----------* ${companyName} *---------- |\n`);
+            console.log("| 1. Add a new recipe\n| 2. Update an existing recipe\n| 3. Search for a recipe\n| 4. Delete a recipe\n| 5. Exit Virtual Recipe Book");
+            console.log(`\n| ---------* Virtual Recipe Book *--------- |\n`);
+
+            console.log("What do you want to do today?\n ↓ Enter the number here");
+            break;
+
+        case "inserted":
+            console.log("\n- - ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨ - -");
+            console.log("| | Recipe inserted! You've successfully created a new recipe! | |");
+            console.log("- - __________________________________________________________ - -\n");
+            break;
+    }
+}
+
+
 
 //CREATE
 function createRecipe(id, title, level, ingredients, instructions, video, vegan) {
@@ -18,7 +37,7 @@ function createRecipe(id, title, level, ingredients, instructions, video, vegan)
     }
 
     recipes.push(newRecipe);
-    console.log("Recipe inserted! You've successfully created a new recipe!");
+    draw("inserted");
 }
 
 function getCreateEntries() {
@@ -31,27 +50,34 @@ function getCreateEntries() {
     let video;
     let vegan;
 
-    id = Number(prompt("Enter the ID of the new recipe (integer number): "));
+    console.log("\nEnter the ID of the new recipe (integer number)\n↓ Enter the number here");
+    id = Number(prompt(""));
 
-    title = prompt("Enter the title of the new recipe: ");
+    console.log("\nEnter the title of the new recipe\n ↓ Enter the title here");
+    title = prompt(">");
 
-    level = Number(prompt("Enter the level of dificulty of the new recipe (1 - Simple | 2 - Moderate | 3 - Complex): "));
+    console.log("\nEnter the level of dificulty of the new recipe (Simple | Moderate | Complex)\n ↓ Enter the level here");
+    level = Number(prompt(">"));
 
     do {
-        let ingredient = prompt("Enter an ingredient of the new recipe: ");
+        console.log("\nEnter an ingredient of the new recipe\n ↓ Enter the ingredient here");
+        let ingredient = prompt(">");
         ingredients.push(ingredient);
         another = prompt("Would you like to add another ingredient (y/n)?: ");
     } while (another == "y")
 
     do {
-        let instruction = prompt("Enter an instruction to prepare the new recipe: ");
+        console.log("\nEnter an instruction of the new recipe\n ↓ Enter the instruction here");
+        let instruction = prompt(">");
         instructions.push(instruction);
         another = prompt("Would you like to add another instruction (y/n)?: ");
     } while (another == "y")
 
-    video = prompt("Enter the link of the video of the new recipe: ");
+    console.log("\nEnter the link of the video of the new recipe\n ↓ Enter the link here")
+    video = prompt(">");
 
-    vegan = prompt("This recipe is vegan? (yes | no): ");
+    console.log("\nThis recipe is vegan? (y/n)\n ↓ Type here")
+    vegan = prompt(">");
     do {
         if (vegan == "yes" || vegan == "Yes" || vegan == "y") {
             vegan = true;
@@ -106,12 +132,8 @@ function deleteRecipe(id) {
 }
 
 do {
-    console.log(`\n| ----------* ${companyName} *---------- |\n`);
-    console.log("| 1. Add a new recipe\n| 2. Update an existing recipe\n| 3. Search for a recipe\n| 4. Delete a recipe\n| 5. Exit Virtual Recipe Book");
-    console.log(`\n| ---------* Virtual Recipe Book *--------- |\n`);
-
-    console.log("What do you want to do today?\n↓Enter the number here");
-    choice = Number(prompt(""));
+    draw("welcome");
+    choice = Number(prompt(">"));
 
     switch (choice) {
         case 1:
@@ -120,6 +142,7 @@ do {
 
         case 2:
             updateRecipe();
+            break;
 
         case 3:
             readRecipe(getRecipeById());
@@ -130,10 +153,13 @@ do {
             deleteRecipe(idDelete);
             break;
 
+        case 5:
+            console.log("\nExiting Virtual Recipe Book");
+            break;
+
         default:
             console.log("Invalid option!");
+            break;
     }
 
 } while (choice != 5)
-
-// createRecipe(1, "Arroz", "Simples", ["1 colher (sopa) de óleo", "1/2 cebola pequena picada", "1 dente de alho pequeno picado", "1 e meia xícara (chá) de arroz", "3 xícaras (chá) de água fervente"], ["Em uma panela, aqueça o óleo e refogue a cebola e o alho até que estejam transparentes", "Junte o arroz e refogue bem até ficar brilhante", "Adicione a água fervente e misture bem.", "Abaixe o fogo, tampe parcialmente a panela e deixe cozinhar até o arroz secar", "Desligue o fogo, tampe a panela por mais 5 minutos para que o arroz termine o cozimento em seu próprio vapor"], "https://youtu.be/gRTWL39lUtQ", true);
