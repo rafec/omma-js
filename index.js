@@ -85,16 +85,24 @@ do {
                 vegan = false;
                 booleanValidator = true;
             }
-            while (!booleanValidator){
+            while (!booleanValidator) {
                 vegan = prompt("Please, insert a valid value: ");
             }
 
 
-        createRecipe(id, title, level, ingredients, instructions, video, vegan);
+            createRecipe(id, title, level, ingredients, instructions, video, vegan);
+            break;
 
         case 3:
-            id = prompt("Enter the id of the recipe that you want to search: ");
-            readRecipe(id);
+            let idSearch = Number(prompt("Enter the id of the recipe that you want to search: "));
+            let searchedRecipe = recipes.filter(recipe => recipe.id == idSearch);
+            readRecipe(searchedRecipe);
+            break;
+
+        case 4:
+            let idDelete = Number(prompt("Enter the id of the recipe that you want to search: "));
+            deleteRecipe(idDelete);
+            break;
     }
 
 } while (choice != 5)
