@@ -19,7 +19,7 @@ function createRecipe(id, title, level, ingredients, instructions, video, vegan)
     console.log("Recipe inserted! You've successfully created a new recipe!");
 }
 
-function readRecipes(recipes) {
+function readRecipe(recipes) {
     let recipeProperties = recipes.map(recipe => {
         let properties = {
             title: recipe.title,
@@ -47,23 +47,55 @@ function deleteRecipe(id) {
 }
 
 do {
-console.log(`\n| ----------* ${companyName} *---------- |\n`);
-console.log("| 1. Add a new recipe\n| 2. Update an existing recipe\n| 3. Search for a recipe\n| 4. Delete a recipe\n| 5. Exit Virtual Recipe Book");
-console.log(`\n| ---------* Virtual Recipe Book *--------- |\n`);
+    console.log(`\n| ----------* ${companyName} *---------- |\n`);
+    console.log("| 1. Add a new recipe\n| 2. Update an existing recipe\n| 3. Search for a recipe\n| 4. Delete a recipe\n| 5. Exit Virtual Recipe Book");
+    console.log(`\n| ---------* Virtual Recipe Book *--------- |\n`);
 
-console.log("What do you want to do today?\n↓Enter the number here");
-choice = prompt("");
+    console.log("What do you want to do today?\n↓Enter the number here");
+    choice = Number(prompt(""));
 
-switch (choice){
-    case 1:
-        let id = prompt("Enter the ID of the new recipe: ");
-        let title = prompt("Enter the title of the new recipe: ");
-        let level = prompt("Enter the level of dificulty of the new recipe: ");
-        let ingredients = prompt("Enter the ingredients of the new recipe: ");
-        let instructions = prompt("Enter the instructions to prepare the new recipe: ");
-        let video = prompt("Enter the link of the video of the new recipe: ");
-        let vegan = prompt("This recipe is vegan? (yes | no)");
-}
+    switch (choice) {
+        case 1:
+            let booleanValidator = false;
+
+            let id = Number(prompt("Enter the ID of the new recipe (integer number): "));
+            while (!Number.isInteger(id)) {
+                id = prompt("Please, insert a valid number: ");
+            }
+
+            let title = prompt("Enter the title of the new recipe: ");
+
+            let level = Number(prompt("Enter the level of dificulty of the new recipe (1 - Simple | 2 - Moderate | 3 - Complex): "));
+            while (level != 1) {
+                console.log(level);
+                level = prompt("Please enter one of the options above: ");
+            }
+
+            let ingredients = prompt("Enter the ingredients of the new recipe: ");
+
+            let instructions = prompt("Enter the instructions to prepare the new recipe: ");
+
+            let video = prompt("Enter the link of the video of the new recipe: ");
+
+            let vegan = prompt("This recipe is vegan? (yes | no): ");
+            if (vegan == "yes" || vegan == "Yes" || vegan == "y") {
+                vegan = true;
+                booleanValidator = true;
+            } else if (vegan == "no" || vegan == "No" || vegan == "n") {
+                vegan = false;
+                booleanValidator = true;
+            }
+            while (!booleanValidator){
+                vegan = prompt("Please, insert a valid value: ");
+            }
+
+
+        createRecipe(id, title, level, ingredients, instructions, video, vegan);
+
+        case 3:
+            id = prompt("Enter the id of the recipe that you want to search: ");
+            readRecipe(id);
+    }
 
 } while (choice != 5)
 
